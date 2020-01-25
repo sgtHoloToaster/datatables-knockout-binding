@@ -1,14 +1,12 @@
 ko.bindingHandlers.datatable = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const tableOptions = allBindings.get("tableOptions") || {};
         const data = valueAccessor();
-        if (tableOptions.paging) {
-            data.subscribe(function () {
-                const table = $(element).closest('table').DataTable();
-                ko.bindingHandlers.datatable.page = table.page();
-                table.destroy();
-            }, null, 'arrayChange');
-        }
+        data.subscribe(function () {
+            $(element).closest('table').DataTable().destroy();
+            ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
+            var tableOptions = allBindings.get("tableOptions") || {};
+            $(element).closest('table').DataTable(tableOptions);
+        }, null, 'arrayChange');
 
         const nodes = Array.prototype.slice.call(element.childNodes, 0);
         ko.utils.arrayForEach(nodes, function (node) {
