@@ -2,11 +2,13 @@ ko.bindingHandlers.datatable = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         const data = valueAccessor();
         bindingContext.update = () => {
-            $(element).closest('table').DataTable().destroy();
+            const oldTable = $(element).closest('table').DataTable();
+            const page = oldTable.page();
+            oldTable.destroy();
             ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
             var tableOptions = allBindings.get("tableOptions") || {};
-            tableOptions.deferRender = true;
-            $(element).closest('table').DataTable(tableOptions);
+            const newTable = $(element).closest('table').DataTable(tableOptions);
+            newTable.page(page).draw('page');
         };
 
         data.subscribe(bindingContext.update, null, 'arrayChange');
