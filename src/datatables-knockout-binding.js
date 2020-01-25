@@ -1,13 +1,15 @@
 ko.bindingHandlers.datatable = {
     init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
         const data = valueAccessor();
-        data.subscribe(function () {
+        bindingContext.update = () => {
             $(element).closest('table').DataTable().destroy();
             ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
             var tableOptions = allBindings.get("tableOptions") || {};
+            tableOptions.deferRender = true;
             $(element).closest('table').DataTable(tableOptions);
-        }, null, 'arrayChange');
+        };
 
+        data.subscribe(bindingContext.update, null, 'arrayChange');
         const nodes = Array.prototype.slice.call(element.childNodes, 0);
         ko.utils.arrayForEach(nodes, function (node) {
             if (node && node.nodeType !== 1) {
@@ -18,29 +20,11 @@ ko.bindingHandlers.datatable = {
         return ko.bindingHandlers.foreach.init(element, valueAccessor, allBindings, viewModel, bindingContext);
     },
     update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-        const updateSyncKey = 'dt-update-sync';
-        const updateTimeout = 500;
-        var updateSync = parseInt(ko.utils.domData.get(element, updateSyncKey) || '');
-        if (updateSync)
-            clearTimeout(updateSync);
-
-        updateSync = setTimeout(() => {
-            var table = $(element).closest('table').DataTable();
-            table.destroy();
-
-            var data = ko.utils.unwrapObservable(valueAccessor());
-            ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
-            var tableOptions = allBindings.get("tableOptions") || {};
-            table = $(element).closest('table').DataTable(tableOptions);
-
-            const key = 'dt-initialized';
-            if (!ko.utils.domData.get(element, key) && data)
-                ko.utils.domData.set(element, key, true);
-
-            return {
-                controlsDescendantBindings: true
-            };
-        }, updateTimeout);
-        ko.utils.domData.set(element, updateSyncKey, updateSync.toString());
+        const key = 'dt-initialized';
+        var data = ko.utils.unwrapObservable(valueAccessor());
+        if (!ko.utils.domData.get(element, key) && data) {
+            bindingContext.update();
+            ko.utils.domData.set(element, key, true);
+        }
     }
 };
