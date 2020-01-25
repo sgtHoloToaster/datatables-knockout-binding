@@ -1,0 +1,72 @@
+<html>
+    <body>
+        <table class="table table-hover" id="ko-model">
+            <thead>
+                <tr>
+                    <th>Unit</th>
+                    <th>Resident Name</th>
+                    <th>Phone</th>
+                    <th>Email</th>
+                    <th class="action-col">Action</th>
+                </tr>
+            </thead>
+            <tbody data-bind="datatable: users">
+                <tr>
+                    <td data-bind="text: unitName"></td>
+                    <td data-bind="text: userFullName"></td>
+                    <td data-bind="text: phoneNumber"></td>
+                    <td data-bind="text: emailAddress"></td>
+                    <td class="action-col">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-bai dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="glyphicon glyphicon-cog" aria-hidden="true"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" data-bind="click: () => $parent.deleteUser($data)">Delete</a></li>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.js"></script>
+        <script type="text/javascript" src="https://knockoutjs.com/downloads/knockout-3.5.1.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script type="text/javascript" src="../src/datatables-knockout-binding.js"></script>
+        <script>
+            const users = [
+                { unitName: "Unit 100", userFullName: "Gary Holt", phoneNumber: "+1 (516) 756-6689", emailAddress: "garyholtex@yahoo.com" },
+                { unitName: "Unit 102", userFullName: "Lucas Haneman", phoneNumber: "+1 (995) 135-4644", emailAddress: "haneman_express@gmail.com" },
+                { unitName: "Unit 103", userFullName: "Michael Patton", phoneNumber: "+1 (713) 442-7963", emailAddress: "faithnm@mail.com" },
+                { unitName: "Unit 104", userFullName: "Neil Fallon", phoneNumber: "+1 (913) 343-4683", emailAddress: "purefury@cmail.com" },
+                { unitName: "Unit 200", userFullName: "Eric Oblander", phoneNumber: "+1 (713) 763-9902", emailAddress: "fivehjohnson@mail.com" },
+                { unitName: "Unit 201", userFullName: "Jennifer Diehl", phoneNumber: "+1 (132) 223-9435", emailAddress: "firered@gmail.com" },
+                { unitName: "Unit 202", userFullName: "Anne DeMarinis", phoneNumber: "+1 (368) 693-1364", emailAddress: "anne_youth@mail.com" },
+                { unitName: "Unit 203", userFullName: "Colin Hay", phoneNumber: "+1 (697) 693-6967", emailAddress: "c0l1n_hayy@yahoo.com" },
+                { unitName: "Unit 204", userFullName: "Hyron Fenton", phoneNumber: "+1 (135) 185-4689", emailAddress: "hyrothehero@yahoo.com" },
+                { unitName: "Unit 100", userFullName: "Kerry King", phoneNumber: "+1 (516) 753-5648", emailAddress: "unit731@slail.com" },
+                { unitName: "Unit 301", userFullName: "Eugene Hütz", phoneNumber: "+1 (633) 564-9032", emailAddress: "eugene_h1@gogbor.com" },
+                { unitName: "Unit 302", userFullName: "Martin Friedman", phoneNumber: "+1 (523) 311-1312", emailAddress: "mfriedman@jmail.com" },
+                { unitName: "Unit 303", userFullName: "Scott Ian", phoneNumber: "+1 (612) 331-0021", emailAddress: "scott3133@mail.com" },
+                { unitName: "Unit 304", userFullName: "Jason Molina", phoneNumber: "+1 (820) 002-0365", emailAddress: "ohia@songs.com" },
+                { unitName: "Unit 400", userFullName: "Gary Rossington", phoneNumber: "+1 (502) 136-5564", emailAddress: "gary_rossington@skynyrd.com" },
+                { unitName: "Unit 400", userFullName: "Mark Matejka", phoneNumber: "+1 (502) 364-1303", emailAddress: "mark_sparky@skynyrd.com" },
+                { unitName: "Unit 402", userFullName: "Josh Homme", phoneNumber: "+1 (562) 366-1324", emailAddress: "josh_qotsa@gmail.com" },
+                { unitName: "Unit 403", userFullName: "Dax Riggs", phoneNumber: "+1 (466) 645-1679", emailAddress: "d_riggs@mail.com" },
+                { unitName: "Unit 404", userFullName: "Michal Brzozowski", phoneNumber: "+1 (399) 402-3135", emailAddress: "hellobomb@yahoo.com" }
+            ]
+
+            const viewModel = {
+                users: ko.observableArray(users),
+                deleteUser: function (user) {
+                    this.users.remove(user);
+                }
+            }
+
+            ko.applyBindings(viewModel, document.getElementById('ko-model'));
+        </script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.20/datatables.min.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    </body>
+</html>
