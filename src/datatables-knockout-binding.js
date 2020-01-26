@@ -1,34 +1,32 @@
 (function (){
+    function getOptions (allBindings) {
+        return allBindings.get('tableOptions') || {};
+    }
+
     ko.bindingHandlers.datatable = {
         init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
             const data = valueAccessor();
-            bindingContext.update = () => {
+            const update = () => {
                 const oldTable = $(element).closest('table').DataTable();
                 const page = oldTable.page();
                 oldTable.destroy();
                 ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
-                var tableOptions = allBindings.get('tableOptions') || {};
+                const tableOptions = getOptions(allBindings);
                 const newTable = $(element).closest('table').DataTable(tableOptions);
                 newTable.page(page).draw('page');
             };
 
-            data.subscribe(bindingContext.update, null, 'arrayChange');
-            const nodes = Array.prototype.slice.call(element.childNodes, 0);
-            ko.utils.arrayForEach(nodes, function (node) {
-                if (node && node.nodeType !== 1) {
+            data.subscribe(update, null, 'arrayChange');
+            ko.utils.arrayForEach(element.childNodes, function (node) {
+                if (node && node.nodeType !== 1 /*element*/)
                     node.parentNode.removeChild(node);
-                }
             });
 
-            return ko.bindingHandlers.foreach.init(element, valueAccessor, allBindings, viewModel, bindingContext);
-        },
-        update: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
-            const key = 'dt-initialized';
-            var data = ko.utils.unwrapObservable(valueAccessor());
-            if (!ko.utils.domData.get(element, key) && data) {
-                bindingContext.update();
-                ko.utils.domData.set(element, key, true);
-            }
+            ko.bindingHandlers.foreach.init(element, valueAccessor, allBindings, viewModel, bindingContext);
+            ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
+            const tableOptions = getOptions(allBindings);
+            $(element).closest('table').DataTable(tableOptions);
+            return { controlsDescendantBindings: true };
         }
     };
 })();
