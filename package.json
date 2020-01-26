@@ -1,6 +1,6 @@
 {
   "name": "datatables-knockout-binding",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Knockout.js binding for jQuery Datatables",
   "main": "src/datatables-knockout-binding.js",
   "directories": {
