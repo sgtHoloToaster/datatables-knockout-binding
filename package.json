@@ -1,0 +1,27 @@
+{
+  "name": "datatables-knockout-binding",
+  "version": "0.0.1",
+  "description": "Knockout.js binding for jQuery Datatables",
+  "main": "src/datatables-knockout-binding.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SgtHoloToaster/datatables-knockout-binding.git"
+  },
+  "keywords": [
+    "datatables",
+    "knockout",
+    "knockout.js"
+  ],
+  "author": "Mikhail Podolskiy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/SgtHoloToaster/datatables-knockout-binding/issues"
+  },
+  "homepage": "https://github.com/SgtHoloToaster/datatables-knockout-binding#readme"
+}
