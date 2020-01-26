@@ -1,4 +1,11 @@
-(function (){
+(function (factory) {
+    if (typeof require === 'function' && typeof exports === 'object' && typeof module === 'object')
+        factory(require('jquery'), require('knockout'));
+    else if (typeof define === 'function' && define['amd'])
+        define(['jquery', 'knockout'], factory);
+    else
+        factory($, ko);
+}(function ($, ko){
     function getOptions (allBindings) {
         return allBindings.get('tableOptions') || {};
     }
@@ -29,4 +36,4 @@
             return { controlsDescendantBindings: true };
         }
     };
-})();
+}));
