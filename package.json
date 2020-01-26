@@ -23,5 +23,9 @@
   "bugs": {
     "url": "https://github.com/SgtHoloToaster/datatables-knockout-binding/issues"
   },
-  "homepage": "https://github.com/SgtHoloToaster/datatables-knockout-binding#readme"
+  "homepage": "https://github.com/SgtHoloToaster/datatables-knockout-binding#readme",
+  "dependencies": {
+    "datatables": "^1.10.8",
+    "knockout": "^3.0.0"
+  }
 }
