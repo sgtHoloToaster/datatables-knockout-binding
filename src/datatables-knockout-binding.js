@@ -16,11 +16,25 @@
             const update = () => {
                 const oldTable = $(element).closest('table').DataTable();
                 const page = oldTable.page();
+                const order = oldTable.order();
+                const search = oldTable.search();
                 oldTable.destroy();
                 ko.bindingHandlers.foreach.update(element, valueAccessor, allBindings, viewModel, bindingContext);
-                const tableOptions = getOptions(allBindings);
-                const newTable = $(element).closest('table').DataTable(tableOptions);
-                newTable.page(page).draw('page');
+                const tableOptions = {
+                    ...getOptions(allBindings),
+                    order,
+                    deferLoading: true
+                };
+
+                if (tableOptions.search)
+                    tableOptions.search.search = search;
+                else 
+                    tableOptions.search = { search };
+
+                $(element).closest('table')
+                    .DataTable(tableOptions)
+                    .page(page)
+                    .draw();
             };
 
             data.subscribe(update, null, 'arrayChange');
