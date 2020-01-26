@@ -15,7 +15,9 @@
             const data = valueAccessor();
             const update = () => {
                 const oldTable = $(element).closest('table').DataTable();
-                const page = oldTable.page();
+                const pageInfo = oldTable.page.info();
+                const page = pageInfo.page;
+                const pageLength = pageInfo.length;
                 const order = oldTable.order();
                 const search = oldTable.search();
                 oldTable.destroy();
@@ -23,6 +25,7 @@
                 const tableOptions = {
                     ...getOptions(allBindings),
                     order,
+                    pageLength,
                     deferLoading: true
                 };
 
