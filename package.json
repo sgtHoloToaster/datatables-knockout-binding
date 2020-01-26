@@ -26,6 +26,7 @@
   "homepage": "https://github.com/SgtHoloToaster/datatables-knockout-binding#readme",
   "dependencies": {
     "datatables": "^1.10.8",
+    "jquery": ">=1.7",
     "knockout": "^3.0.0"
   }
 }
