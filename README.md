@@ -3,6 +3,11 @@ datatables-knockout-binding
 
 Knockout.js binding for jQuery Datatables.
 
+# Installation
+### Using npm
+
+	npm install datatables-knockout-binding
+
 # Usage
 Just add the 'datatable' binding to your table body along with your array 
 
@@ -21,8 +26,3 @@ If you need to specify Datatables options, then just add the tableOptions bindin
 
 	<tbody data-bind="datatable: someArray, tableOptions: { paging: false }">
       ...
-
-# Installation
-### Using npm
-
-	npm install datatables-knockout-binding
